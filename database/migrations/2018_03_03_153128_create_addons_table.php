@@ -20,7 +20,7 @@ class CreateAddonsTable extends Migration
             $table->string('name', 255);
             $table->string('path', 255);
             $table->longText('description')->nullable();
-            $table->longText('info');
+            $table->json('info');
             $table->string('status', 255);
             $table->timestamps();
         });
