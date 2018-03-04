@@ -15,5 +15,7 @@ Route::get('/test', function() {
 });
 Route::get('/', 'AddonController@index')->name('addon.index');
 Route::post('upload', 'AddonController@upload')->name('addon.upload');
-Route::post('input', 'AddonController@input')->name('addon.input');
+Route::get('input', 'AddonController@input')->name('addon.input');
+Route::post('regist', 'AddonController@regist')->name('addon.regist');
 Route::get('show/{id}', 'AddonController@show')->name('addon.show');
+Route::post('download/{id}', 'AddonController@download')->name('addon.download');

@@ -25,4 +25,29 @@ class Addon extends Model
   {
     return $query->where('status', $status);
   }
+
+  public function user()
+  {
+    return $this->belongsTo('App\User');
+  }
+  public function counter()
+  {
+    return $this->hasOne('App\Counter');
+  }
+  public function paks()
+  {
+    return $this->belongsToMany('App\Pak');
+  }
+
+  public function getCount()
+  {
+    return $this->counter->count;
+  }
+  public function getPakList($delimiter = ', ')
+  {
+    $pak_list = $this->paks->map(function($pak) {
+      return $pak->name;
+    })->toArray();
+    return implode($delimiter, $pak_list);
+  }
 }

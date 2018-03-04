@@ -13,7 +13,7 @@ class CreateAddonsPaksTable extends Migration
      */
     public function up()
     {
-        Schema::create('addons_paks', function (Blueprint $table) {
+        Schema::create('addon_pak', function (Blueprint $table) {
             $table->bigInteger('addon_id');
             $table->bigInteger('pak_id');
         });
@@ -26,6 +26,6 @@ class CreateAddonsPaksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addons_paks');
+        Schema::dropIfExists('addon_pak');
     }
 }

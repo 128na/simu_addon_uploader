@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Addon;
+use App\Pak;
+use App\Counter;
 use App\Status;
 use App\AddonAnalyzer;
 
@@ -20,13 +22,19 @@ class AddonController extends Controller
 
   public function index(Request $request)
   {
-    $models = $this->model_name::status(Status::PUBLISH)->get();
+    $models = $this
+      ->model_name::status(Status::PUBLISH)
+      ->with(['user', 'paks', 'counter'])
+      ->get();
     return view("{$this->view_dir}.index", compact('models'));
   }
 
   public function show(Request $request, $id)
   {
-    $model = $this->model_name::status(Status::PUBLISH)->findOrFail($id);
+    $model = $this
+      ->model_name::status(Status::PUBLISH)
+      ->with(['user', 'paks', 'counter'])
+      ->findOrFail($id);
     return view("{$this->view_dir}.show", compact('model'));
   }
 
@@ -67,14 +75,26 @@ class AddonController extends Controller
     ]);
     $request->session()->put('addon_id', $model->id);
 
-    return view('addon.upload', compact('model'));
+    return redirect()->route('addon.input');
   }
 
   public function input(Request $request)
   {
+    $id = $request->session()->get('addon_id');
+    $model = $this->model_name::findOrFail($id);
+    $paks = Pak::all();
+
+    return view('addon.input', compact('model', 'paks'));
+  }
+
+
+  public function regist(Request $request)
+  {
     $request->validate([
       'title'       => 'required|string|max:255',
-      'description' => 'required|string',
+      'description' => 'nullable|string',
+      'paks'        => 'array',
+      'paks.*'      => 'exists:paks,id',
     ]);
 
     $id = $request->session()->get('addon_id');
@@ -93,20 +113,48 @@ class AddonController extends Controller
       'status'      => Status::PUBLISH,
     ])->save();
 
+    $paks = [];
+    foreach ($request->input('paks', []) as $pak_id) {
+      $paks[] = Pak::findOrFail($pak_id);
+    }
+    $model->paks()->saveMany($paks);
+
+    Counter::create([
+      'addon_id' => $model->id,
+      'count'    => 0,
+    ]);
+
+    $request->session()->forget('addon_id');
     $request->session()->flash('success', 'published.');
     return redirect()->route('addon.index');
   }
 
+  public function download(Request $request, $id)
+  {
+    $model = $this->model_name::status(Status::PUBLISH)
+      ->with(['counter'])
+      ->findOrFail($id);
 
+    $counter = $model->counter;
+    $counter->count++;
+    $counter->save();
 
+    $path = static::getAddonPath($model->path);
+    return response()->download($path, $model->name);
 
+  }
+
+    // storage/app/addons/xxx.zip
+  private static function getAddonPath($path)
+  {
+    return realpath(storage_path("app/{$path}"));
+  }
 
 
   // ファイル名の情報（*.dat, *.tab）を取得する
   private static function getInfo($path)
   {
-    // storage/app/addons/xxx.zip
-    $path = realpath(storage_path("app/{$path}"));
+    $path = static::getAddonPath($path);
 
     $analyzer = new AddonAnalyzer($path);
 

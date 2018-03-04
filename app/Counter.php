@@ -10,4 +10,13 @@ class Counter extends Model
     'addon_id',
     'count',
   ];
+
+  protected $casts = [
+    'count' => 'integer',
+  ];
+
+  public function addon()
+  {
+    return $this->belongsTo('App\Addon');
+  }
 }

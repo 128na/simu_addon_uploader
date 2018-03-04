@@ -13,7 +13,11 @@
   <li>
     <a href="{{ route('addon.show', ['id' => $model->id]) }}">{{ $model->name }}</a>
     <strong>{{ $model->title }}</strong>
-    <small>{{ $model->description }}</small></li>
+    <small>{{ $model->description }}</small>
+    <span>By username</span>
+    <span>{{ $model->getPakList(',') }}</span>
+    <span>{{ $model->getCount() }}回</span>
+  </li>
 @empty
   <li>なし</li>
 @endforelse

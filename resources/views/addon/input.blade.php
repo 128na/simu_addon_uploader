@@ -1,15 +1,31 @@
 @extends('template')
 
 @section('content')
-<form method="post" action="{{ route('addon.input') }}">
+<form method="post" action="{{ route('addon.regist') }}">
   {{ csrf_field() }}
   <div>
     <label for="title">タイトル</label>
-    <input type="text" name="title" id="title" value="{{ $model->title }}">
+    <input type="text" name="title" id="title" value="{{ old('title', $model->title) }}">
   </div>
   <div>
     <label for="description">説明</label>
-    <textarea name="description" id="description">{{ $model->description }}</textarea>
+    <textarea name="description" id="description">{{ old('description', $model->description) }}</textarea>
+  </div>
+  <div>
+    <label>Pakサイズ</label>
+@foreach ($paks as $pak)
+      <label>
+        <input 
+          type="checkbox" 
+          name="paks[]" 
+          value="{{ $pak->id }}"
+@if (in_array($pak->id, old('paks', [])))
+          checked
+@endif
+        >
+        {{ $pak->name }}
+      </label>
+@endforeach
   </div>
   <div>
     <label>ファイル名</label>
