@@ -48,18 +48,14 @@ class AddonController extends Controller
     try {
       $path = $upload_file->store('addons');
     } catch(Exception $e) {
-      logger()->error($e->getTraceAsString());
-      $request->session()->flash('error', 'アップロード失敗： ファイルを保存できませんでした');
-      return redirect()->route('addon.index');
+      return static::errorReportAndRedirect($e, $request, 'アップロード失敗： ファイルを保存できませんでした', 'addon.index');
     }
 
     // dat抽出
     try {
       $info = static::getInfo($path);
     } catch(Exception $e) {
-      logger()->error($e->getTraceAsString());
-      $request->session()->flash('error', 'ファイル解析失敗');
-      return redirect()->route('addon.index');
+      return static::errorReportAndRedirect($e, $request, 'ファイル解析失敗', 'addon.index');
     }
 
     // todo:readme抽出処理?
@@ -107,9 +103,7 @@ class AddonController extends Controller
     try {
       $model = $this->model_name::findOrFail($id);
     } catch(ModelNotFoundException $e) {
-      logger()->error($e->getTraceAsString());
-      $request->session()->flash('error', 'ファイルが見つかりません');
-      return redirect()->route('addon.index');
+      return static::errorReportAndRedirect($e, $request, 'ファイルが見つかりません', 'addon.index');
     }
 
     $model->fill([
@@ -147,6 +141,13 @@ class AddonController extends Controller
     $path = static::getAddonPath($model->path);
     return response()->download($path, $model->name);
 
+  }
+
+  private function errorReportAndRedirect($e, $request, $message, $dest = 'idnex')
+  {
+    logger()->error($e->getMessage());
+    $request->session()->flash('error', $message);
+    return redirect()->route($dest);
   }
 
     // storage/app/addons/xxx.zip
