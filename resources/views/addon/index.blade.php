@@ -11,12 +11,11 @@
 <ul>
 @forelse ($models as $model)
   <li>
-    <a href="{{ route('addon.show', ['id' => $model->id]) }}">{{ $model->name }}</a>
-    <strong>{{ $model->title }}</strong>
-    <small>{{ $model->description }}</small>
+    <span><a href="{{ route('addon.show', ['id' => $model->id]) }}"><strong>{{ $model->title }}</strong></a></span>
     <span>By username</span>
-    <span>{{ $model->getPakList(',') }}</span>
     <span>{{ $model->getCount() }}回</span>
+    <span>{{ $model->getPakList(',') }}</span>
+    <span>{{ $model->created_at }}</span>
   </li>
 @empty
   <li>なし</li>

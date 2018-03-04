@@ -81,6 +81,11 @@ class AddonController extends Controller
   public function input(Request $request)
   {
     $id = $request->session()->get('addon_id');
+
+    if (is_null($id)) {
+      $request->session()->flash('error', 'ファイルがありません');
+      return redirect()->route('addon.index');
+    }
     $model = $this->model_name::findOrFail($id);
     $paks = Pak::all();
 
