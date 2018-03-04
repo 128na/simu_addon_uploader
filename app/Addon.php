@@ -8,6 +8,7 @@ class Addon extends Model
 {
   protected $fillable = [
     'user_id',
+    'title',
     'name',
     'path',
     'description',
