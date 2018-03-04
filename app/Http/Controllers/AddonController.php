@@ -18,6 +18,18 @@ class AddonController extends Controller
     parent::__construct('addon', Addon::class);
   }
 
+  public function index(Request $request)
+  {
+    $models = $this->model_name::status(Status::PUBLISH)->get();
+    return view("{$this->view_dir}.index", compact('models'));
+  }
+
+  public function show(Request $request, $id)
+  {
+    $model = $this->model_name::status(Status::PUBLISH)->findOrFail($id);
+    return view("{$this->view_dir}.show", compact('model'));
+  }
+
   public function upload(Request $request)
   {
     $request->validate([
@@ -44,7 +56,7 @@ class AddonController extends Controller
 
     // todo:readme抽出処理?
 
-    $model = Addon::create([
+    $model = $this->model_name::create([
       'user_id'     => 0,
       'name'        => $upload_file->getClientOriginalName(),
       'title'       => $upload_file->getClientOriginalName(),
@@ -68,7 +80,7 @@ class AddonController extends Controller
     $id = $request->session()->get('addon_id');
 
     try {
-      $model = Addon::findOrFail($id);
+      $model = $this->model_name::findOrFail($id);
     } catch(ModelNotFoundException $e) {
       logger()->error($e->getTraceAsString());
       $request->session()->flash('error', 'ファイルが見つかりません');
