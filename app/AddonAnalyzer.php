@@ -73,4 +73,9 @@ class AddonAnalyzer
 
     return $tabset;
   }
+
+  public function close()
+  {
+    return $this->zipper->close();
+  }
 }

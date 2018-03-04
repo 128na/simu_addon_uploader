@@ -104,6 +104,12 @@ class AddonController extends Controller
       $dats = array_merge($dats, $analyzer->extractObjInfo($file));
     }
 
+    if (count($dats) < 1) {
+      $analyzer->close();
+      unlink($path);
+      throw new Exception('dat files not found.');
+    }
+
     foreach ($analyzer->extractTabFiles() as $file) {
       $tabs_list[static::getFilename($file)] = $analyzer->extractTabInfo($file);
     }
