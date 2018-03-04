@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Addon;
 use App\Status;
 use App\AddonAnalyzer;
 
+use \Exception;
 use \Zipper;
 
 class AddonController extends Controller
@@ -19,17 +20,27 @@ class AddonController extends Controller
 
   public function upload(Request $request)
   {
-    // todo:validate request
-
+    $request->validate([
+      'upload_file' => 'required|file|mimetypes:application/zip',
+    ]);
     $upload_file = $request->file('upload_file');
+
     try {
       $path = $upload_file->store('addons');
-    } catch(\Exception $e) {
-      dd('失敗した'.$e->getMessage());
+    } catch(Exception $e) {
+      logger()->error($e->getTraceAsString());
+      $request->session()->flash('error', 'アップロード失敗： ファイルを保存できませんでした');
+      return redirect()->route('addon.index');
     }
 
     // dat抽出
-    $info = static::getInfo($path);
+    try {
+      $info = static::getInfo($path);
+    } catch(Exception $e) {
+      logger()->error($e->getTraceAsString());
+      $request->session()->flash('error', 'ファイル解析失敗');
+      return redirect()->route('addon.index');
+    }
 
     // todo:readme抽出処理?
 
@@ -49,8 +60,20 @@ class AddonController extends Controller
 
   public function input(Request $request)
   {
+    $request->validate([
+      'title'       => 'required|string|max:255',
+      'description' => 'required|string',
+    ]);
+
     $id = $request->session()->get('addon_id');
-    $model = Addon::findOrFail($id);
+
+    try {
+      $model = Addon::findOrFail($id);
+    } catch(ModelNotFoundException $e) {
+      logger()->error($e->getTraceAsString());
+      $request->session()->flash('error', 'ファイルが見つかりません');
+      return redirect()->route('addon.index');
+    }
 
     $model->fill([
       'title'       => $request->input('title'),

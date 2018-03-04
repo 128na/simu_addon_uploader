@@ -3,7 +3,7 @@
 @section('content')
 <form method="post" action="{{ route('addon.upload') }}" enctype="multipart/form-data">
   {{ csrf_field() }}
-  <input type="file" name="upload_file">
+  <input type="file" name="upload_file" accept='application/zip'>
   <input type="submit">
 </form>
 <hr>
