@@ -9,6 +9,12 @@
 
 define('LARAVEL_START', microtime(true));
 
+// http://furyu.hatenablog.com/entry/20150410/1428674881
+if ( isset($_SERVER['HTTP_X_SAKURA_FORWARDED_FOR']) ) {
+    $_SERVER['HTTPS'] = 'on';
+    $_ENV['HTTPS'] = 'on';
+}
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
