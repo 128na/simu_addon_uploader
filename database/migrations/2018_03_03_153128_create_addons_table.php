@@ -15,14 +15,17 @@ class CreateAddonsTable extends Migration
     {
         Schema::create('addons', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
-            $table->string('title', 255);
-            $table->string('name', 255);
-            $table->string('path', 255);
-            $table->longText('description')->nullable();
-            $table->json('info');
-            $table->string('status', 255);
+            $table->unsignedBigInteger('user_id');
+            $table->string('title', 255)->comment('タイトル');
+            $table->string('name', 255)->comment('ファイル名');
+            $table->string('path', 255)->comment('ファイルパス');
+            $table->longText('description')->nullable()->comment('説明');
+            $table->json('info')->comment('パースしたファイルデータ');
+            $table->integer('status')->comment('公開状態');
             $table->timestamps();
+
+            $table->index(['user_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -33,6 +36,11 @@ class CreateAddonsTable extends Migration
      */
     public function down()
     {
+        Schema::table('addons', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropIndex(['user_id']);
+        });
+
         Schema::dropIfExists('addons');
     }
 }

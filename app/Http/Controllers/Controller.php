@@ -34,4 +34,19 @@ class Controller extends BaseController
       return view("{$this->view_dir}.show", compact('model'));
     }
 
+
+  protected static function errorReportAndRedirect($e, $request, $message, $dest = 'idnex')
+  {
+    logger()->error($e->getMessage());
+    $request->session()->flash('error', $message);
+    return redirect()->route($dest);
+  }
+
+
+  // storage/app/addons/xxx.zip
+  protected static function getAddonPath($path)
+  {
+    return realpath(storage_path("app/{$path}"));
+  }
+
 }

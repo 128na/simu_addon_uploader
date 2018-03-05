@@ -15,7 +15,7 @@ class CreatePaksTable extends Migration
     {
         Schema::create('paks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 128);
+            $table->string('name')->comment('pakセット名');;
             $table->timestamps();
         });
     }

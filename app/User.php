@@ -27,9 +27,12 @@ class User extends Authenticatable
     'password', 'remember_token',
   ];
 
+  protected $casts = [
+    'is_dmin' => 'boolean',
+  ];
 
   public function addons()
   {
-    return $this->nasMany('App\Addon');
+    return $this->hasMany('App\Models\Addon');
   }
 }

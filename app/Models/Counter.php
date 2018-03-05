@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +17,6 @@ class Counter extends Model
 
   public function addon()
   {
-    return $this->belongsTo('App\Addon');
+    return $this->belongsTo('App\Models\Addon');
   }
 }

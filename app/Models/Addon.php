@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Status;
@@ -26,17 +26,22 @@ class Addon extends Model
     return $query->where('status', $status);
   }
 
+  public function scopeUser($query, $user)
+  {
+    return $query->where('user_id', $user->id);
+  }
+
   public function user()
   {
     return $this->belongsTo('App\User');
   }
   public function counter()
   {
-    return $this->hasOne('App\Counter');
+    return $this->hasOne('App\Models\Counter');
   }
   public function paks()
   {
-    return $this->belongsToMany('App\Pak');
+    return $this->belongsToMany('App\Models\Pak');
   }
 
   public function getCount()

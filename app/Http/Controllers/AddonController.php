@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Addon;
-use App\Pak;
-use App\Counter;
-use App\Status;
-use App\AddonAnalyzer;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Addon;
+use App\Models\Pak;
+use App\Models\Counter;
+use App\Models\Status;
+use App\Models\AddonAnalyzer;
 
 use \Exception;
 use \Zipper;
@@ -17,25 +19,8 @@ class AddonController extends Controller
 {
   public function __construct()
   {
+    $this->middleware('auth');
     parent::__construct('addon', Addon::class);
-  }
-
-  public function index(Request $request)
-  {
-    $models = $this
-      ->model_name::status(Status::PUBLISH)
-      ->with(['user', 'paks', 'counter'])
-      ->get();
-    return view("{$this->view_dir}.index", compact('models'));
-  }
-
-  public function show(Request $request, $id)
-  {
-    $model = $this
-      ->model_name::status(Status::PUBLISH)
-      ->with(['user', 'paks', 'counter'])
-      ->findOrFail($id);
-    return view("{$this->view_dir}.show", compact('model'));
   }
 
   public function upload(Request $request)
@@ -48,20 +33,20 @@ class AddonController extends Controller
     try {
       $path = $upload_file->store('addons');
     } catch(Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'アップロード失敗： ファイルを保存できませんでした', 'addon.index');
+      return static::errorReportAndRedirect($e, $request, 'アップロード失敗： ファイルを保存できませんでした', 'addon.manage');
     }
 
     // dat抽出
     try {
       $info = static::getInfo($path);
     } catch(Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイル解析失敗', 'addon.index');
+      return static::errorReportAndRedirect($e, $request, 'ファイル解析失敗', 'addon.manage');
     }
 
     // todo:readme抽出処理?
 
     $model = $this->model_name::create([
-      'user_id'     => 0,
+      'user_id'     => Auth::id(),
       'name'        => $upload_file->getClientOriginalName(),
       'title'       => $upload_file->getClientOriginalName(),
       'path'        => $path,
@@ -80,7 +65,7 @@ class AddonController extends Controller
 
     if (is_null($id)) {
       $request->session()->flash('error', 'ファイルがありません');
-      return redirect()->route('addon.index');
+      return redirect()->route('addon.manage');
     }
     $model = $this->model_name::findOrFail($id);
     $paks = Pak::all();
@@ -103,7 +88,7 @@ class AddonController extends Controller
     try {
       $model = $this->model_name::findOrFail($id);
     } catch(ModelNotFoundException $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイルが見つかりません', 'addon.index');
+      return static::errorReportAndRedirect($e, $request, 'ファイルが見つかりません', 'addon.manage');
     }
 
     $model->fill([
@@ -124,38 +109,58 @@ class AddonController extends Controller
     ]);
 
     $request->session()->forget('addon_id');
-    $request->session()->flash('success', 'published.');
+    $request->session()->flash('success', '投稿しました');
     return redirect()->route('addon.index');
   }
 
-  public function download(Request $request, $id)
+
+  public function cancel(Request $request)
   {
-    $model = $this->model_name::status(Status::PUBLISH)
-      ->with(['counter'])
+    $id = $request->session()->get('addon_id');
+
+    try {
+      $model = $this->model_name::findOrFail($id);
+    } catch(ModelNotFoundException $e) {
+      return static::errorReportAndRedirect($e, $request, 'ファイルが見つかりません', 'addon.manage');
+    }
+    try {
+      unlink(static::getAddonPath($model->path));
+    } catch(\Exception $e) {
+      return static::errorReportAndRedirect($e, $request, 'ファイルの削除に失敗しました', 'addon.manage');
+    }
+    $model->delete();
+
+    $request->session()->forget('addon_id');
+    $request->session()->flash('success', '投稿をキャンセルしました');
+    return redirect()->route('addon.manage');
+  }
+
+  public function manage(Request $request)
+  {
+    $models = $this
+      ->model_name::status(Status::PUBLISH)
+      ->user(Auth::user())
+      ->with(['paks', 'counter'])
+      ->paginate(50);
+    return view("{$this->view_dir}.manage", compact('models'));
+  }
+
+  public function delete(Request $request, $id)
+  {
+    $model = $this
+      ->model_name::status(Status::PUBLISH)
+      ->user(Auth::user())
       ->findOrFail($id);
 
-    $counter = $model->counter;
-    $counter->count++;
-    $counter->save();
-
-    $path = static::getAddonPath($model->path);
-    return response()->download($path, $model->name);
-
+    try {
+      unlink(static::getAddonPath($model->path));
+    } catch(\Exception $e) {
+      return static::errorReportAndRedirect($e, $request, 'ファイルの削除に失敗しました', 'addon.manage');
+    }
+    $model->delete();
+    $request->session()->flash('success', '削除しました');
+    return redirect()->route('addon.manage');
   }
-
-  private function errorReportAndRedirect($e, $request, $message, $dest = 'idnex')
-  {
-    logger()->error($e->getMessage());
-    $request->session()->flash('error', $message);
-    return redirect()->route($dest);
-  }
-
-    // storage/app/addons/xxx.zip
-  private static function getAddonPath($path)
-  {
-    return realpath(storage_path("app/{$path}"));
-  }
-
 
   // ファイル名の情報（*.dat, *.tab）を取得する
   private static function getInfo($path)

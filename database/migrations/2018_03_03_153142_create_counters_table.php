@@ -15,9 +15,12 @@ class CreateCountersTable extends Migration
     {
         Schema::create('counters', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('addon_id');
-            $table->bigInteger('count');
+            $table->unsignedBigInteger('addon_id');
+            $table->unsignedBigInteger('count')->default(0)->comment('DL数');
             $table->timestamps();
+
+            $table->index(['addon_id']);
+            $table->foreign('addon_id')->references('id')->on('addons')->onDelete('cascade');
         });
     }
 
@@ -28,6 +31,10 @@ class CreateCountersTable extends Migration
      */
     public function down()
     {
+        Schema::table('counters', function (Blueprint $table) {
+            $table->dropForeign(['addon_id']);
+            $table->dropIndex(['addon_id']);
+        });
         Schema::dropIfExists('counters');
     }
 }
