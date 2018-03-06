@@ -19,8 +19,8 @@ class AddonAnalyzer
   public function extractObjInfo($path)
   {
     $content = $this->zipper->getFileContent($path);
-    // 区切り文字を--に統一
-    $content = preg_replace('/\-{3,}/', '--', $content);
+
+    $content = static::prepareDat($content);
 
     $dats = explode('--', $content);
 
@@ -32,9 +32,9 @@ class AddonAnalyzer
         continue;
       }
 
-      $reg = '/name=(.*)/';
+      $reg = '/name=(.*)/i';
       preg_match($reg, $dat, $name);
-      $reg = '/copyright=(.*)/';
+      $reg = '/copyright=(.*)/i';
       preg_match($reg, $dat, $copyright);
 
       $data = [
@@ -77,5 +77,15 @@ class AddonAnalyzer
   public function close()
   {
     return $this->zipper->close();
+  }
+
+  private static function prepareDat($content)
+  {
+    // 区切り文字を--に統一
+    $content = preg_replace('/\-{3,}/', '--', $content);
+    // 改行コードを統一
+    $content = str_replace(["\r\n","\r","\n"], "\n", $content);
+
+    return $content;
   }
 }
