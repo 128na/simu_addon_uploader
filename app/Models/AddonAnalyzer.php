@@ -28,7 +28,7 @@ class AddonAnalyzer
     foreach ($dats as $dat) {
 
       // nameプロパティがないものはスキップ
-      if (stripos($dat, 'name') === false) {
+      if (stripos($dat, 'obj=') === false) {
         continue;
       }
 
