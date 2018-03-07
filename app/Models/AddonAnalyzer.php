@@ -81,6 +81,8 @@ class AddonAnalyzer
 
   private static function prepareDat($content)
   {
+    //先頭のBOMを削除
+    $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
     // 区切り文字を--に統一
     $content = preg_replace('/\-{3,}/', '--', $content);
     // 改行コードを統一
