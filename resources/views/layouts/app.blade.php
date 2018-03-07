@@ -20,6 +20,7 @@
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ url('favicon.ico') }}">
 
 </head>
 <body>
