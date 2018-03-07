@@ -56,6 +56,8 @@ class AddonAnalyzer
   {
     $content = $this->zipper->getFileContent($path);
 
+    $content = static::prepareDat($content);
+
     $tabs = explode("\n", $content);
     $tabs = array_map('trim', $tabs);
     $tabs = array_filter($tabs, function($tab) {
@@ -85,6 +87,15 @@ class AddonAnalyzer
     $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
     // 区切り文字を--に統一
     $content = preg_replace('/\-{3,}/', '--', $content);
+    // 改行コードを統一
+    $content = str_replace(["\r\n","\r","\n"], "\n", $content);
+
+    return $content;
+  }
+  private static function prepareTab($content)
+  {
+    //先頭のBOMを削除
+    $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
     // 改行コードを統一
     $content = str_replace(["\r\n","\r","\n"], "\n", $content);
 
