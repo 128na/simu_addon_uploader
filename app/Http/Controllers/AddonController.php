@@ -33,14 +33,14 @@ class AddonController extends Controller
     try {
       $path = $upload_file->store('addons');
     } catch(Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'アップロード失敗： ファイルを保存できませんでした', 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.store'), 'addon.manage');
     }
 
     // dat抽出
     try {
       $info = static::getInfo($path);
     } catch(Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイル解析失敗', 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.analyze'), 'addon.manage');
     }
 
     // todo:readme抽出処理?
@@ -64,7 +64,7 @@ class AddonController extends Controller
     $id = $request->session()->get('addon_id');
 
     if (is_null($id)) {
-      $request->session()->flash('error', 'ファイルがありません');
+      $request->session()->flash('error', __('messages.error.file'));
       return redirect()->route('addon.manage');
     }
     $model = $this->model_name::findOrFail($id);
@@ -88,7 +88,7 @@ class AddonController extends Controller
     try {
       $model = $this->model_name::findOrFail($id);
     } catch(ModelNotFoundException $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイルが見つかりません', 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.file'), 'addon.manage');
     }
 
     $model->fill([
@@ -109,7 +109,7 @@ class AddonController extends Controller
     ]);
 
     $request->session()->forget('addon_id');
-    $request->session()->flash('success', '投稿しました');
+    $request->session()->flash('success', __('messages.success.publish'));
     return redirect()->route('addon.index');
   }
 
@@ -121,17 +121,17 @@ class AddonController extends Controller
     try {
       $model = $this->model_name::findOrFail($id);
     } catch(ModelNotFoundException $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイルが見つかりません', 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.file'), 'addon.manage');
     }
     try {
       unlink(static::getAddonPath($model->path));
     } catch(\Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイルの削除に失敗しました', 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.delete'), 'addon.manage');
     }
     $model->delete();
 
     $request->session()->forget('addon_id');
-    $request->session()->flash('success', '投稿をキャンセルしました');
+    $request->session()->flash('success', __('messages.success.cancel'));
     return redirect()->route('addon.manage');
   }
 
@@ -155,10 +155,10 @@ class AddonController extends Controller
     try {
       unlink(static::getAddonPath($model->path));
     } catch(\Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイルの削除に失敗しました', 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.delete'), 'addon.manage');
     }
     $model->delete();
-    $request->session()->flash('success', '削除しました');
+    $request->session()->flash('success', __('messages.success.delete'));
     return redirect()->route('addon.manage');
   }
 

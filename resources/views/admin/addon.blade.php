@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
 @section('title')
-投稿一覧
+{{ __('messages.page.admin.addon') }}
 @endsection
 
 @section('content')
 <div class="container">
 @include('parts.upload')
-  <h2>投稿一覧</h2>
+  <h2>{{ __('messages.page.admin.addon') }}</h2>
   <ul class="content-list">
     <li class="content-title">
       <div class="row">
-        <div class="col-sm-3">ファイル名</div>
-        <div class="col-sm-2">投稿者</div>
-        <div class="col-sm-2">Pakサイズ</div>
-        <div class="col-sm-1">DL回数</div>
-        <div class="col-sm-2">投稿日</div>
-        <div class="col-sm-2">操作</div>
+        <div class="col-sm-3">{{ __('messages.filename') }}</div>
+        <div class="col-sm-2">{{ __('messages.author') }}</div>
+        <div class="col-sm-2">{{ __('messages.paksize') }}</div>
+        <div class="col-sm-1">{{ __('messages.dl_count') }}</div>
+        <div class="col-sm-2">{{ __('messages.posted_at') }}</div>
+        <div class="col-sm-2">{{ __('messages.action') }}</div>
       </div>
     </li>
 @forelse  ($models as $model)
@@ -40,13 +40,13 @@
           {{ $model->created_at }}
         </div>
         <div class="col-sm-2">
-          <a href="{{ route('admin.addon.delete', ['id' => $model->id]) }}" class="btn btn-danger btn-sm">削除</a>
+          <a href="{{ route('admin.addon.delete', ['id' => $model->id]) }}" class="btn btn-danger btn-sm">{{ __('messages.delete') }}</a>
         </div>
       </div>
     </li>
 @empty
     <li class="content-item">
-      投稿がありません
+      {{ __('messages.no_addons') }}
     </li>
 @endforelse
   </ul>

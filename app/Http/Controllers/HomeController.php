@@ -44,6 +44,5 @@ class HomeController extends Controller
 
     $path = static::getAddonPath($model->path);
     return response()->download($path, $model->name);
-
   }
 }

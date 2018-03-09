@@ -12,3 +12,34 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+.break {
+  word-break: break-all;
+}
+.ep {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.content-list {
+  list-style: none;
+  padding-left: 0;
+  border-bottom: solid 1px #ccc;
+}
+.content-title {
+  border-bottom: solid 2px #ccc;
+}
+.content-item {
+  padding: .5rem;
+  border-bottom: solid 1px #ccc;
+}
+.content-item:hover {
+  background-color: #fff;
+}
+.pagination {
+  justify-content: center;
+}
+.text-pre {
+  white-space: pre;
+}

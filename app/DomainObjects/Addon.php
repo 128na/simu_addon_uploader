@@ -46,7 +46,7 @@ class Addon extends Model
 
   public function getCount()
   {
-    return $this->counter->count;
+    return $this->counter->count ?? -1;
   }
   public function getPakList($delimiter = ', ')
   {

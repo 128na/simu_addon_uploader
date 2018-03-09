@@ -34,7 +34,7 @@ class UserController extends Controller
       'name' => $request->input('name'),
       'email' => $request->input('email'),
     ])->save();
-    $request->session()->flash('success', '更新しました');
+    $request->session()->flash('success', __('messages.success.update'));
     return redirect()->route('user.edit');
   }
   public function delete(Request $request)
@@ -42,7 +42,7 @@ class UserController extends Controller
     $user = Auth::user();
     $user->delete();
     $request->session()->flush();
-    $request->session()->flash('success', 'アカウントを削除しました');
+    $request->session()->flash('success', __('messages.success.delete_account'));
     return redirect()->route('addon.index');
   }
 }

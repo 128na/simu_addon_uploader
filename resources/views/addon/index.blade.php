@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('title')
-トップ@endsection
+{{ __('messages.page.top') }}
+@endsection
 
 @section('og-description')
 {{ config('app.description') }}@endsection
@@ -9,15 +10,15 @@
 @section('content')
 <div class="container">
 @include('parts.upload')
-  <h2>一覧</h2>
+  <h2>{{ __('messages.addons') }}</h2>
   <ul class="content-list">
     <li class="content-title">
       <div class="row">
-        <div class="col-sm-5">ファイル名</div>
-        <div class="col-sm-2">投稿者</div>
-        <div class="col-sm-2">Pakサイズ</div>
-        <div class="col-sm-1">DL回数</div>
-        <div class="col-sm-2">投稿日</div>
+        <div class="col-sm-5">{{ __('messages.filename') }}</div>
+        <div class="col-sm-2">{{ __('messages.author') }}</div>
+        <div class="col-sm-2">{{ __('messages.paksize') }}</div>
+        <div class="col-sm-1">{{ __('messages.dl_count') }}</div>
+        <div class="col-sm-2">{{ __('messages.posted_at') }}</div>
       </div>
     </li>
 @forelse ($models as $model)
@@ -44,7 +45,7 @@
     </li>
 @empty
     <li class="content-item">
-      投稿がありません
+      {{ __('messages.no_addons') }}
     </li>
 @endforelse
   </ul>

@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('title')
-ユーザー情報
+{{ __('messages.page.user') }}
 @endsection
 
 @section('content')
 <div class="container">
   <dl>
-    <dt>ユーザー名</dt>
+    <dt>{{ __('messages.name') }}</dt>
     <dd>{{ $user->name }}</dd>
-    <dt>メールアドレス</dt>
+    <dt>{{ __('messages.email') }}</dt>
     <dd>{{ $user->email }}</dd>
-    <dt>登録日</dt>
+    <dt>{{ __('messages.created_at') }}</dt>
     <dd>{{ $user->created_at }}</dd>
   </dl>
-  <a href="{{ route('user.edit') }}" class="btn btn-primary">編集する</a>
+  <a href="{{ route('user.edit') }}" class="btn btn-primary">{{ __('messages.edit') }}</a>
   <hr>
-  <a href="{{ route('user.delete') }}" class="btn btn-danger">アカウントを削除する</a>
+  <a href="{{ route('user.delete') }}" class="btn btn-danger">{{ __('messages.delete_user') }}</a>
 </div>
 @endsection

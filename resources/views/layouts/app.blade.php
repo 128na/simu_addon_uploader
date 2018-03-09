@@ -56,19 +56,19 @@
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
             @guest
-              <li><a class="nav-link" href="{{ route('login') }}">ログイン</a></li>
-              <li><a class="nav-link" href="{{ route('register') }}">登録</a></li>
+              <li><a class="nav-link" href="{{ route('login') }}">{{ __('messages.login')}}</a></li>
+              <li><a class="nav-link" href="{{ route('register') }}">{{ __('messages.register')}}</a></li>
             @else
             @if (Auth::user()->is_admin)
-              <li><a class="nav-link" href="{{ route('admin.user') }}"><span class="text-danger">[Admin]</span>ユーザー</a></li>
-              <li><a class="nav-link" href="{{ route('admin.addon') }}"><span class="text-danger">[Admin]</span>投稿</a></li>
+              <li><a class="nav-link" href="{{ route('admin.user') }}"><span class="text-danger">[{{ __('messages.admin')}}]</span>{{ __('messages.users')}}</a></li>
+              <li><a class="nav-link" href="{{ route('admin.addon') }}"><span class="text-danger">[{{ __('messages.admin')}}]</span>{{ __('messages.addons')}}</a></li>
             @endif
 
-              <li><a class="nav-link" href="{{ route('addon.manage') }}">投稿一覧</a></li>
-              <li><a class="nav-link" href="{{ route('user.index') }}">ユーザー情報</a></li>
+              <li><a class="nav-link" href="{{ route('addon.manage') }}">{{ __('messages.users')}}</a></li>
+              <li><a class="nav-link" href="{{ route('user.index') }}">{{ __('messages.profile')}}</a></li>
               <li>
                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                  ログアウト
+                  {{ __('messages.logout')}}
                 </a>
               </li>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -105,11 +105,31 @@
     <div class="container">
       <span>
         {{ config('app.name') }} <small>(version {{ config('app.version')}})</small> created by <a href="https://twitter.com/128Na" target="_blank">@128Na</a>.
-         / 
-        <a href="https://github.com/128na/simu_addon_uploader" target="_blank">Github</a> Pull requests are always welcome!</span>
+         /
+        <a href="https://github.com/128na/simu_addon_uploader" target="_blank">Github</a> Pull requests are always welcome!
+      </span>
+      <span class="pull-right">
+@foreach(config('app.laguages') as $lang => $label)
+        <a href="#" class="js_set_lang" data-lang="{{ $lang }}">{{ $label }}</a>
+@endforeach
+      </span>
     </div>
   </nav>
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
+  <script>
+    $(function(){
+      const $js_set_lang = $('.js_set_lang')
+
+      const set_lang = function(e) {
+        e.preventDefault();
+        const lang = e.target.dataset.lang;
+        Cookies.set('lang', lang);
+        location.reload();
+      }
+
+      $js_set_lang.on('click', set_lang)
+    })
+  </script>
 </body>
 </html>

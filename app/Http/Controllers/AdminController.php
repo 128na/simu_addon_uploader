@@ -31,11 +31,11 @@ class AdminController extends Controller
         unlink(static::getAddonPath($addon->path));
       });
     } catch(\Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイルの削除に失敗しました', 'admin.user');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.delete'), 'admin.user');
     }
 
     $model->delete();
-    $request->session()->flash('success', '削除しました');
+    $request->session()->flash('success', __('messages.success.delete'));
     return redirect()->route('admin.user');
   }
 
@@ -53,10 +53,10 @@ class AdminController extends Controller
     try {
       unlink(static::getAddonPath($model->path));
     } catch(\Exception $e) {
-      return static::errorReportAndRedirect($e, $request, 'ファイルの削除に失敗しました', 'admin.addon');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.delete'), 'admin.addon');
     }
     $model->delete();
-    $request->session()->flash('success', '削除しました');
+    $request->session()->flash('success', __('messages.success.delete'));
     return redirect()->route('admin.addon');
   }
 }
