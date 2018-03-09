@@ -50,9 +50,10 @@
             @if (Auth::user()->is_admin)
               <li><a class="nav-link" href="{{ route('admin.user') }}"><span class="text-danger">[Admin]</span>ユーザー</a></li>
               <li><a class="nav-link" href="{{ route('admin.addon') }}"><span class="text-danger">[Admin]</span>投稿</a></li>
-              @endif
+            @endif
 
               <li><a class="nav-link" href="{{ route('addon.manage') }}">投稿一覧</a></li>
+              <li><a class="nav-link" href="{{ route('user.index') }}">ユーザー情報</a></li>
               <li>
                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                   ログアウト

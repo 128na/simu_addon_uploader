@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Addon;
-use App\User;
+use App\DomainObjects\Addon;
+use App\DomainObjects\User;
 
 class AdminController extends Controller
 {

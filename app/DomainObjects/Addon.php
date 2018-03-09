@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\DomainObjects;
 
 use Illuminate\Database\Eloquent\Model;
 use Status;
@@ -33,15 +33,15 @@ class Addon extends Model
 
   public function user()
   {
-    return $this->belongsTo('App\User');
+    return $this->belongsTo('App\DomainObjects\User');
   }
   public function counter()
   {
-    return $this->hasOne('App\Models\Counter');
+    return $this->hasOne('App\DomainObjects\Counter');
   }
   public function paks()
   {
-    return $this->belongsToMany('App\Models\Pak');
+    return $this->belongsToMany('App\DomainObjects\Pak');
   }
 
   public function getCount()

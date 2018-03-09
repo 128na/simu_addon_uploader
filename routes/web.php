@@ -31,6 +31,13 @@ Route::post('cancel', 'AddonController@cancel')->name('addon.cancel');
 Route::get('manage', 'AddonController@manage')->name('addon.manage');
 Route::get('delete/{id}', 'AddonController@delete')->name('addon.delete');
 
+Route::get('user', 'UserController@index')->name('user.index');
+Route::get('user/edit', 'UserController@edit')->name('user.edit');
+Route::get('user/delete', 'UserController@delete')->name('user.delete');
+Route::post('user', 'UserController@update')->name('user.update');
+
+
+// 管理者機能
 Route::get('admin/user', 'AdminController@user')->name('admin.user');
 Route::get('admin/user/delete/{id}', 'AdminController@userDelete')->name('admin.user.delete');
 Route::get('admin/addon', 'AdminController@addon')->name('admin.addon');

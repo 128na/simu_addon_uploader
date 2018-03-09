@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\DomainObjects;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class Pak extends Model
 
   public function addons()
   {
-    return $this->hasMany('App\Models\Addon');
+    return $this->hasMany('App\DomainObjects\Addon');
   }
 
 }

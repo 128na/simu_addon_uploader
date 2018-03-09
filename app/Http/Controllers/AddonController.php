@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Addon;
-use App\Models\Pak;
-use App\Models\Counter;
+use App\DomainObjects\Addon;
+use App\DomainObjects\Pak;
+use App\DomainObjects\Counter;
 use App\Models\Status;
 use App\Models\AddonAnalyzer;
 

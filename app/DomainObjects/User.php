@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\DomainObjects;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,6 +33,6 @@ class User extends Authenticatable
 
   public function addons()
   {
-    return $this->hasMany('App\Models\Addon');
+    return $this->hasMany('App\DomainObjects\Addon');
   }
 }
