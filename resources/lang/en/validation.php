@@ -116,6 +116,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+      'upload_file' => 'Upload file',
+      'title'       => 'Title',
+      'description' => 'Description',
+      'paks'        => 'Pak size',
+      'paks.*'      => 'Pak size',
+      'name'        => 'Name',
+      'email'       => 'E-Mail address',
+    ],
 
 ];
