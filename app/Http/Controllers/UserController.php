@@ -40,6 +40,14 @@ class UserController extends Controller
   public function delete(Request $request)
   {
     $user = Auth::user();
+    try {
+      $user->addons->each(function($addon) {
+        unlink(static::getAddonPath($addon->path));
+      });
+    } catch(\Exception $e) {
+      return static::errorReportAndRedirect($e, $request, __('messages.error.delete'), 'user.index');
+    }
+
     $user->delete();
     $request->session()->flush();
     $request->session()->flash('success', __('messages.success.delete_account'));
