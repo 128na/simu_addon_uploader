@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h3 class="card-title">{{ __('messages.addons') }}</h3>
+    <h3 class="card-title">{{ __('messages.addon.list') }}</h3>
   </div>
   <ul class="list-group list-group-flush">
 @foreach ($items as $item)

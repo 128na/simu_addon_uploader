@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-{{ __('messages.page.top') }}
+{{ __('messages.page.addon.index') }}
 @endsection
 
 @section('og-description')
@@ -10,15 +10,15 @@
 @section('content')
 <div class="container">
 @include('parts.upload')
-  <h2>{{ __('messages.addons') }}</h2>
+  <h2>{{ __('messages.addon.list') }}</h2>
   <ul class="content-list">
     <li class="content-title">
       <div class="row">
-        <div class="col-sm-5">{{ __('messages.filename') }}</div>
-        <div class="col-sm-2">{{ __('messages.author') }}</div>
-        <div class="col-sm-2">{{ __('messages.paksize') }}</div>
-        <div class="col-sm-1">{{ __('messages.dl_count') }}</div>
-        <div class="col-sm-2">{{ __('messages.posted_at') }}</div>
+        <div class="col-sm-5">{{ __('messages.addon.filename') }}</div>
+        <div class="col-sm-2">{{ __('messages.addon.user') }}</div>
+        <div class="col-sm-2">{{ __('messages.addon.paksize') }}</div>
+        <div class="col-sm-1">{{ __('messages.addon.count') }}</div>
+        <div class="col-sm-2">{{ __('messages.addon.created_at') }}</div>
       </div>
     </li>
 @forelse ($models as $model)
@@ -45,7 +45,7 @@
     </li>
 @empty
     <li class="content-item">
-      {{ __('messages.no_addons') }}
+      {{ __('messages.label.no_item') }}
     </li>
 @endforelse
   </ul>

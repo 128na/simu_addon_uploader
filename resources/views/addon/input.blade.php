@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-{{ __('messages.page.input') }}
+{{ __('messages.page.addon.input') }}
 @endsection
 
 @section('content')
@@ -9,20 +9,20 @@
   <form method="post" action="{{ route('addon.regist') }}">
     {{ csrf_field() }}
     <div class="form-group">
-      <label>{{ __('messages.filename') }}</label>
+      <label>{{ __('messages.addon.filename') }}</label>
       <p>{{ $model->name }}</p>
     </div>
 
     <div class="form-group">
-      <label for="title"><span class="badge badge-danger">{{ __('messages.required') }}</span> {{ __('messages.title') }}</label>
+      <label for="title"><span class="badge badge-danger">{{ __('messages.label.required') }}</span> {{ __('messages.addon.title') }}</label>
       <input type="text" name="title" id="title" value="{{ old('title', $model->title) }}" class="form-control">
     </div>
     <div class="form-group">
-      <label for="description"><span class="badge badge-info">{{ __('messages.optional') }}</span> {{ __('messages.description') }}</label>
+      <label for="description"><span class="badge badge-info">{{ __('messages.label.optional') }}</span> {{ __('messages.addon.description') }}</label>
       <textarea name="description" id="description" class="form-control">{{ old('description', $model->description) }}</textarea>
     </div>
     <div class="form-group">
-      <label><span class="badge badge-info">{{ __('messages.optional') }}</span> {{ __('messages.paks') }}</label><br>
+      <label><span class="badge badge-info">{{ __('messages.label.optional') }}</span> {{ __('messages.addon.paks') }}</label><br>
 @foreach ($paks as $pak)
       <div class="form-check form-check-inline">
         <label class="form-check-label">
@@ -42,13 +42,14 @@
     </div>
 
     <div>
-      <label>{{ __('messages.addons') }}</label>
+      <label>{{ __('messages.addon.list') }}</label>
 @include('parts.addon-list', ['items' => $model->info])
     </div>
     <hr>
     <div class="form-group">
-      <input type="submit" class="btn btn-primary" value="{{ __('messages.register') }}">
-        <input type="submit" value="{{ __('messages.cancel') }}" class="btn btn-danger" formaction="{{ route('addon.cancel') }}">
+      <input type="submit" class="btn btn-primary" value="{{ __('messages.action.register') }}">
+      <hr>
+      <input type="submit" value="{{ __('messages.action.cancel') }}" class="btn btn-danger btn_confirm" data-message="{{ __('messages.label.confirm_cancel_input') }}" formaction="{{ route('addon.cancel') }}">
     </div>
   </form>
 </div>

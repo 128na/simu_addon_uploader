@@ -56,19 +56,19 @@
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
             @guest
-              <li><a class="nav-link" href="{{ route('login') }}">{{ __('messages.login')}}</a></li>
-              <li><a class="nav-link" href="{{ route('register') }}">{{ __('messages.register')}}</a></li>
+              <li><a class="nav-link" href="{{ route('login') }}">{{ __('messages.action.login')}}</a></li>
+              <li><a class="nav-link" href="{{ route('register') }}">{{ __('messages.action.register')}}</a></li>
             @else
             @if (Auth::user()->is_admin)
-              <li><a class="nav-link" href="{{ route('admin.user') }}"><span class="text-danger">[{{ __('messages.admin')}}]</span>{{ __('messages.users')}}</a></li>
-              <li><a class="nav-link" href="{{ route('admin.addon') }}"><span class="text-danger">[{{ __('messages.admin')}}]</span>{{ __('messages.addons')}}</a></li>
+              <li><a class="nav-link" href="{{ route('admin.user') }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.user.list')}}</a></li>
+              <li><a class="nav-link" href="{{ route('admin.addon') }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.addon.list')}}</a></li>
             @endif
 
-              <li><a class="nav-link" href="{{ route('addon.manage') }}">{{ __('messages.users')}}</a></li>
-              <li><a class="nav-link" href="{{ route('user.index') }}">{{ __('messages.profile')}}</a></li>
+              <li><a class="nav-link" href="{{ route('addon.manage') }}">{{ __('messages.addon.list')}}</a></li>
+              <li><a class="nav-link" href="{{ route('user.index') }}">{{ __('messages.label.profile')}}</a></li>
               <li>
                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                  {{ __('messages.logout')}}
+                  {{ __('messages.action.logout')}}
                 </a>
               </li>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -117,19 +117,5 @@
   </nav>
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
-  <script>
-    $(function(){
-      const $js_set_lang = $('.js_set_lang')
-
-      const set_lang = function(e) {
-        e.preventDefault();
-        const lang = e.target.dataset.lang;
-        Cookies.set('lang', lang);
-        location.reload();
-      }
-
-      $js_set_lang.on('click', set_lang)
-    })
-  </script>
 </body>
 </html>

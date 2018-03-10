@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('title')
-{{ __('messages.page.user') }}
+{{ __('messages.page.user.index') }}
 @endsection
 
 @section('content')
 <div class="container">
   <dl>
-    <dt>{{ __('messages.name') }}</dt>
+    <dt>{{ __('messages.user.name') }}</dt>
     <dd>{{ $user->name }}</dd>
-    <dt>{{ __('messages.email') }}</dt>
+    <dt>{{ __('messages.user.email') }}</dt>
     <dd>{{ $user->email }}</dd>
-    <dt>{{ __('messages.created_at') }}</dt>
+    <dt>{{ __('messages.user.created_at') }}</dt>
     <dd>{{ $user->created_at }}</dd>
   </dl>
-  <a href="{{ route('user.edit') }}" class="btn btn-primary">{{ __('messages.edit') }}</a>
+  <a href="{{ route('user.edit') }}" class="btn btn-primary">{{ __('messages.action.edit') }}</a>
   <hr>
-  <a href="{{ route('user.delete') }}" class="btn btn-danger">{{ __('messages.delete_user') }}</a>
+  <a href="{{ route('user.delete') }}" class="btn btn-danger btn_confirm" data-message="{{ __('messages.label.confirm_delete_user') }}">{{ __('messages.action.delete_user') }}</a>
 </div>
 @endsection

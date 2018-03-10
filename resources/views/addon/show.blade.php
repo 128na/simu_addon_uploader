@@ -14,15 +14,15 @@
       <h3 class="card-title">{{ $model->name }}</h3>
       <h6 class="card-subtitle mb-2 text-muted"><span class="text-pre">{{ $model->description }}</span></h6>
       <p class="card-text">
-        <div>{{ __('messages.paksize') }}:
+        <div>{{ __('messages.addon.paksize') }}:
           @include('parts.paksize-list', ['items' => $model->paks])
         </div>
-        <div>{{ __('messages.download') }}: {{ $model->counter->count }}</div>
+        <div>{{ __('messages.addon.count') }}: {{ $model->counter->count }}</div>
       </p>
 
       <form method="post" action="{{ route('addon.download', ['id' => $model->id]) }}">
         {{ csrf_field() }}
-        <input type="submit" value="{{ __('messages.download') }}" class="btn btn-primary">
+        <input type="submit" value="{{ __('messages.action.download') }}" class="btn btn-primary">
       </form>
     </div>
     <div class="card-footer">

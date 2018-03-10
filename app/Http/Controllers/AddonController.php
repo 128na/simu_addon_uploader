@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
+use App\Exceptions\DatNotFoundException;
+
 use App\DomainObjects\Addon;
 use App\DomainObjects\Pak;
 use App\DomainObjects\Counter;
@@ -33,14 +35,16 @@ class AddonController extends Controller
     try {
       $path = $upload_file->store('addons');
     } catch(Exception $e) {
-      return static::errorReportAndRedirect($e, $request, __('messages.error.store'), 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.file_store_failed'), 'addon.manage');
     }
 
     // dat抽出
     try {
       $info = static::getInfo($path);
+    } catch(DatNotFoundException $e) {
+      return static::errorReportAndRedirect($e, $request, __('messages.error.dat_not_found'), 'addon.manage');
     } catch(Exception $e) {
-      return static::errorReportAndRedirect($e, $request, __('messages.error.analyze'), 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.file_analyze_failed'), 'addon.manage');
     }
 
     // todo:readme抽出処理?
@@ -64,7 +68,7 @@ class AddonController extends Controller
     $id = $request->session()->get('addon_id');
 
     if (is_null($id)) {
-      $request->session()->flash('error', __('messages.error.file'));
+      $request->session()->flash('error', __('messages.error.file_not_found'));
       return redirect()->route('addon.manage');
     }
     $model = $this->model_name::findOrFail($id);
@@ -88,7 +92,7 @@ class AddonController extends Controller
     try {
       $model = $this->model_name::findOrFail($id);
     } catch(ModelNotFoundException $e) {
-      return static::errorReportAndRedirect($e, $request, __('messages.error.file'), 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.post_not_found'), 'addon.manage');
     }
 
     $model->fill([
@@ -121,12 +125,12 @@ class AddonController extends Controller
     try {
       $model = $this->model_name::findOrFail($id);
     } catch(ModelNotFoundException $e) {
-      return static::errorReportAndRedirect($e, $request, __('messages.error.file'), 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.file_not_found'), 'addon.manage');
     }
     try {
       unlink(static::getAddonPath($model->path));
     } catch(\Exception $e) {
-      return static::errorReportAndRedirect($e, $request, __('messages.error.delete'), 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.file_delete_failed'), 'addon.manage');
     }
     $model->delete();
 
@@ -155,7 +159,7 @@ class AddonController extends Controller
     try {
       unlink(static::getAddonPath($model->path));
     } catch(\Exception $e) {
-      return static::errorReportAndRedirect($e, $request, __('messages.error.delete'), 'addon.manage');
+      return static::errorReportAndRedirect($e, $request, __('messages.error.file_delete_failed'), 'addon.manage');
     }
     $model->delete();
     $request->session()->flash('success', __('messages.success.delete'));
@@ -178,7 +182,7 @@ class AddonController extends Controller
     if (count($dats) < 1) {
       $analyzer->close();
       unlink($path);
-      throw new Exception('dat files not found.');
+      throw new DatNotFoundException();
     }
 
     foreach ($analyzer->extractTabFiles() as $file) {

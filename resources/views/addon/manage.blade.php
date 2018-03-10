@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('title')
-{{ __('messages.page.manage') }}
+{{ __('messages.page.addon.manage') }}
 @endsection
 
 @section('content')
 <div class="container">
 @include('parts.upload')
-  <h2>{{ __('messages.addons') }}</h2>
+  <h2>{{ __('messages.addon.list') }}</h2>
   <ul class="content-list">
     <li class="content-title">
       <div class="row">
-        <div class="col-sm-5">{{ __('messages.filename') }}</div>
-        <div class="col-sm-2">{{ __('messages.author') }}</div>
-        <div class="col-sm-1">{{ __('messages.paksize') }}</div>
-        <div class="col-sm-2">{{ __('messages.dl_count') }}</div>
-        <div class="col-sm-2">{{ __('messages.action') }}</div>
+        <div class="col-sm-5">{{ __('messages.addon.filename') }}</div>
+        <div class="col-sm-2">{{ __('messages.addon.user') }}</div>
+        <div class="col-sm-1">{{ __('messages.addon.paksize') }}</div>
+        <div class="col-sm-2">{{ __('messages.addon.count') }}</div>
+        <div class="col-sm-2">{{ __('messages.label.action') }}</div>
       </div>
     </li>
 @forelse  ($models as $model)
@@ -36,13 +36,13 @@
           {{ $model->created_at }}
         </div>
         <div class="col-sm-2">
-          <a href="{{ route('addon.delete', ['id' => $model->id]) }}" class="btn btn-danger btn-sm">{{ __('messages.delete') }}</a>
+          <a href="{{ route('addon.delete', ['id' => $model->id]) }}" class="btn btn-danger btn-sm btn_confirm" data-message="{{ __('messages.label.confirm_delete_item') }}">{{ __('messages.action.delete') }}</a>
         </div>
       </div>
     </li>
 @empty
     <li class="content-item">
-      {{ __('messages.no_addons') }}
+      {{ __('messages.label.no_addons') }}
     </li>
 @endforelse
   </ul>
