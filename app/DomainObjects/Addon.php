@@ -57,12 +57,14 @@ class Addon extends Model
     return implode($delimiter, $pak_list);
   }
 
-
+  /**
+   * DBインスタンスをモデルに変換するのがめどいのでID一覧を取得してからモデルを取得し直す
+   */
   public static function freeWord($word)
   {
     $wild_word = "%{$word}%";
     $ids = DB::table('addons')
-      ->select('addons.*')
+      ->select('addons.id')
       ->join('users', 'users.id', '=', 'addons.user_id')
       ->join('addon_pak', 'addon_pak.addon_id', '=', 'addons.id', 'left outer')
       ->join('paks', 'paks.id', '=', 'addon_pak.pak_id', 'left outer')
