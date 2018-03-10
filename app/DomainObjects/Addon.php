@@ -45,17 +45,6 @@ class Addon extends Model
     return $query->where('user_id', $user->id);
   }
 
-  public function scopeSearchFreeword($query, $word)
-  {
-    $word = "%{$word}%";
-    return $query
-      ->where('title', 'like', $word)
-      ->orWhere('name', 'like', $word)
-      ->orWhere('description', 'like', $word)
-      ->orWhere('info', 'like', $word);
-  }
-
-
   public function getCount()
   {
     return $this->counter->count ?? -1;
@@ -71,18 +60,18 @@ class Addon extends Model
 
   public static function freeWord($word)
   {
-    $word = "%{$word}%";
+    $wild_word = "%{$word}%";
     $ids = DB::table('addons')
-      ->select('addons.id')
+      ->select('addons.*')
       ->join('users', 'users.id', '=', 'addons.user_id')
-      ->join('addon_pak', 'addon_pak.addon_id', '=', 'addons.id')
-      ->join('paks', 'paks.id', '=', 'addon_pak.pak_id')
-      ->orWhere('addons.title', 'like', $word)
-      ->orWhere('addons.name', 'like', $word)
-      ->orWhere('addons.description', 'like', $word)
-      ->orWhere('addons.info', 'like', $word)
-      ->orWhere('users.name', 'like', $word)
-      ->orWhere('paks.name', 'like', $word)
+      ->join('addon_pak', 'addon_pak.addon_id', '=', 'addons.id', 'left outer')
+      ->join('paks', 'paks.id', '=', 'addon_pak.pak_id', 'left outer')
+      ->orWhere('addons.title', 'like', $wild_word)
+      ->orWhere('addons.name', 'like', $wild_word)
+      ->orWhere('addons.description', 'like', $wild_word)
+      ->orWhere('addons.info', 'like', $wild_word)
+      ->orWhere('users.name', 'like', $wild_word)
+      ->orWhere('paks.name', 'like', $wild_word)
       ->distinct()
       ->get()
       ->map(function($item) {return $item->id;})
