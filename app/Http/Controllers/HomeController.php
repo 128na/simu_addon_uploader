@@ -20,7 +20,7 @@ class HomeController extends Controller
     $models = $this
       ->model_name::status(Status::PUBLISH)
       ->with(['user', 'paks', 'counter'])
-      ->paginate(20);
+      ->paginate(config('app.per_page'));
     return view("{$this->view_dir}.index", compact('models'));
   }
 
@@ -50,8 +50,10 @@ class HomeController extends Controller
   public function search(Request $request)
   {
     $word = $request->input('word');
-
-    $models =$this->model_name::with(['paks', 'counter', 'user'])->searchFreeword($word)->paginate(20);
+    $models = Addon::freeWord($word)
+      ->status(Status::PUBLISH)
+      ->with(['user', 'paks', 'counter'])
+      ->paginate(config('app.per_page'));
 
     return view("{$this->view_dir}.search", compact('word', 'models'));
   }
