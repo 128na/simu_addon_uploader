@@ -18,7 +18,7 @@ class AdminController extends Controller
 
   public function user(Request $request)
   {
-    $models = User::paginate(20);
+    $models = User::paginate(config('app.per_page'));
     return view('admin.user', compact('models'));
   }
 
@@ -42,7 +42,7 @@ class AdminController extends Controller
   public function addon(Request $request)
   {
     $models = Addon::with(['user', 'paks', 'counter'])
-      ->paginate(50);
+      ->paginate(config('app.per_page'));
     return view('admin.addon', compact('models'));
   }
 

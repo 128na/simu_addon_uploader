@@ -3,6 +3,7 @@
 namespace App\DomainObjects;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Status;
 
 class Addon extends Model
@@ -65,5 +66,28 @@ class Addon extends Model
       return $pak->name;
     })->toArray();
     return implode($delimiter, $pak_list);
+  }
+
+
+  public static function freeWord($word)
+  {
+    $word = "%{$word}%";
+    $ids = DB::table('addons')
+      ->select('addons.id')
+      ->join('users', 'users.id', '=', 'addons.user_id')
+      ->join('addon_pak', 'addon_pak.addon_id', '=', 'addons.id')
+      ->join('paks', 'paks.id', '=', 'addon_pak.pak_id')
+      ->orWhere('addons.title', 'like', $word)
+      ->orWhere('addons.name', 'like', $word)
+      ->orWhere('addons.description', 'like', $word)
+      ->orWhere('addons.info', 'like', $word)
+      ->orWhere('users.name', 'like', $word)
+      ->orWhere('paks.name', 'like', $word)
+      ->distinct()
+      ->get()
+      ->map(function($item) {return $item->id;})
+      ->toArray();
+
+    return static::whereIn('id', $ids);
   }
 }
