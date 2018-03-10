@@ -37,49 +37,7 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-      <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-          {{ config('app.name') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav mr-auto">
-
-          </ul>
-
-          <!-- Right Side Of Navbar -->
-          <ul class="navbar-nav ml-auto">
-            <!-- Authentication Links -->
-            @guest
-              <li><a class="nav-link" href="{{ route('login') }}">{{ __('messages.action.login')}}</a></li>
-              <li><a class="nav-link" href="{{ route('register') }}">{{ __('messages.action.register')}}</a></li>
-            @else
-            @if (Auth::user()->is_admin)
-              <li><a class="nav-link" href="{{ route('admin.user') }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.user.list')}}</a></li>
-              <li><a class="nav-link" href="{{ route('admin.addon') }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.addon.list')}}</a></li>
-            @endif
-
-              <li><a class="nav-link" href="{{ route('addon.manage') }}">{{ __('messages.addon.list')}}</a></li>
-              <li><a class="nav-link" href="{{ route('user.index') }}">{{ __('messages.label.profile')}}</a></li>
-              <li>
-                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                  {{ __('messages.action.logout')}}
-                </a>
-              </li>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-              </form>
-            @endguest
-          </ul>
-        </div>
-      </div>
-    </nav>
-
+@include('parts.header')
     <main class="py-4">
 @if (session('success'))
       <div class="container alert alert-success">{{ session('success') }}</div>
@@ -101,20 +59,7 @@
     </main>
   </div>
 
-  <nav class="navbar fixed-bottom navbar-light navbar-laravel border-top">
-    <div class="container">
-      <span>
-        {{ config('app.name') }} <small>(version {{ config('app.version')}})</small> created by <a href="https://twitter.com/128Na" target="_blank">@128Na</a>.
-         /
-        <a href="https://github.com/128na/simu_addon_uploader" target="_blank">Github</a> Pull requests are always welcome!
-      </span>
-      <span class="pull-right">
-@foreach(config('app.laguages') as $lang => $label)
-        <a href="#" class="js_set_lang" data-lang="{{ $lang }}">{{ $label }}</a>
-@endforeach
-      </span>
-    </div>
-  </nav>
+@include('parts.footer')
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
 </body>

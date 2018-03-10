@@ -14,6 +14,7 @@ return [
     'remember_me' => 'Remember Me',
     'send_reset'  => 'Send Password Reset Link',
     'reset'       => 'Reset Password',
+    'search'      => 'Search',
   ],
 
   'user' => [
@@ -42,16 +43,17 @@ return [
   ],
 
   'label' => [
-    'no_item'        => 'No items',
-    'required'       => 'Required',
-    'optional'       => 'Optional',
-    'profile'        => 'My Profile',
-    'action'         => 'Actions',
-    'has_incomplete' => 'Incomplete upload file exists',
-    'confirm'       => 'Are you sure?',
-    'confirm_delete_user' => 'Are you sure to delete your account?',
-    'confirm_delete_item' => 'Are you sure to delete?',
+    'no_item'              => 'No items',
+    'required'             => 'Required',
+    'optional'             => 'Optional',
+    'profile'              => 'My Profile',
+    'action'               => 'Actions',
+    'has_incomplete'       => 'Incomplete upload file exists',
+    'confirm'              => 'Are you sure?',
+    'confirm_delete_user'  => 'Are you sure to delete your account?',
+    'confirm_delete_item'  => 'Are you sure to delete?',
     'confirm_cancel_input' => 'Are you sure to cancel?',
+    'keyword'              => 'Keyword',
   ],
 
   'page' => [
@@ -59,6 +61,7 @@ return [
       'index'  => 'Top',
       'input'  => 'Input form',
       'manage' => 'My Addons',
+      'search' => 'result of :word',
     ],
     'admin' => [
       'addon' => 'Addons',

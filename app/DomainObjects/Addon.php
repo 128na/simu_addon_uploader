@@ -21,16 +21,6 @@ class Addon extends Model
     'info' => 'array',
   ];
 
-  public function scopeStatus($query, $status)
-  {
-    return $query->where('status', $status);
-  }
-
-  public function scopeUser($query, $user)
-  {
-    return $query->where('user_id', $user->id);
-  }
-
   public function user()
   {
     return $this->belongsTo('App\DomainObjects\User');
@@ -43,6 +33,27 @@ class Addon extends Model
   {
     return $this->belongsToMany('App\DomainObjects\Pak');
   }
+
+  public function scopeStatus($query, $status)
+  {
+    return $query->where('status', $status);
+  }
+
+  public function scopeUser($query, $user)
+  {
+    return $query->where('user_id', $user->id);
+  }
+
+  public function scopeSearchFreeword($query, $word)
+  {
+    $word = "%{$word}%";
+    return $query
+      ->where('title', 'like', $word)
+      ->orWhere('name', 'like', $word)
+      ->orWhere('description', 'like', $word)
+      ->orWhere('info', 'like', $word);
+  }
+
 
   public function getCount()
   {

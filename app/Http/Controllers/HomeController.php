@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DomainObjects\Addon;
+use App\DomainObjects\Pak;
 use App\Models\Status;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
   public function __construct()
@@ -44,5 +45,14 @@ class HomeController extends Controller
 
     $path = static::getAddonPath($model->path);
     return response()->download($path, $model->name);
+  }
+
+  public function search(Request $request)
+  {
+    $word = $request->input('word');
+
+    $models =$this->model_name::with(['paks', 'counter', 'user'])->searchFreeword($word)->paginate(20);
+
+    return view("{$this->view_dir}.search", compact('word', 'models'));
   }
 }

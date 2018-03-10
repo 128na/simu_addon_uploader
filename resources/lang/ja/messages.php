@@ -14,6 +14,7 @@ return [
     'remember_me' => 'ログイン状態を記憶する',
     'send_reset'  => 'パスワード再設定用メールを送信する',
     'reset'       => '再設定',
+    'search'      => '検索',
   ],
 
   'user' => [
@@ -42,16 +43,17 @@ return [
   ],
 
   'label' => [
-    'no_item'        => '投稿がありません',
-    'required'       => '必須',
-    'optional'       => '任意',
-    'profile'        => 'ユーザー情報',
-    'action'         => '操作',
-    'has_incomplete' => '未完了の投稿があります',
-    'confirm'       => 'よろしいですか',
-    'confirm_delete_user' => 'アカウントを削除してもよろしいですか',
-    'confirm_delete_item' => '削除してもよろしいですか',
+    'no_item'              => '投稿がありません',
+    'required'             => '必須',
+    'optional'             => '任意',
+    'profile'              => 'ユーザー情報',
+    'action'               => '操作',
+    'has_incomplete'       => '未完了の投稿があります',
+    'confirm'              => 'よろしいですか',
+    'confirm_delete_user'  => 'アカウントを削除してもよろしいですか',
+    'confirm_delete_item'  => '削除してもよろしいですか',
     'confirm_cancel_input' => '投稿をキャンセルしてもよろしいですか',
+    'keyword'              => 'キーワード',
   ],
 
   'page' => [
@@ -59,6 +61,7 @@ return [
       'index'  => 'トップ',
       'input'  => '登録情報入力',
       'manage' => '投稿一覧',
+      'search' => ':word の検索結果',
     ],
     'admin' => [
       'addon' => '投稿一覧',
