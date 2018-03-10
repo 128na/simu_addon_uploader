@@ -42,7 +42,7 @@
     </li>
 @empty
     <li class="content-item">
-      {{ __('messages.label.no_addons') }}
+      {{ __('messages.label.no_item') }}
     </li>
 @endforelse
   </ul>
