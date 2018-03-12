@@ -6,8 +6,8 @@ return [
     'version' => '1.2',
     'laguages' => [
       'en' => 'English',
-      'ja' => '日本語',
       'de' => 'Deutsch',
+      'ja' => '日本語',
       'zh-CN' => '中文',
     ],
 
