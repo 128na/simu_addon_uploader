@@ -122,7 +122,7 @@ return [
       'description' => '説明',
       'paks'        => 'Pakサイズ',
       'paks.*'      => 'Pakサイズ',
-      'name'        => '氏名',
+      'name'        => 'ユーザー名',
       'email'       => 'メールアドレス',
     ],
 

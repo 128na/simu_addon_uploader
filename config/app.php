@@ -7,6 +7,8 @@ return [
     'laguages' => [
       'en' => 'English',
       'ja' => '日本語',
+      'de' => 'Deutsch',
+      'zh-CN' => '中文',
     ],
 
     'per_page' => 20,
