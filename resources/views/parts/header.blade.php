@@ -15,22 +15,22 @@
         </li>
         <!-- Authentication Links -->
         @guest
-          <li><a class="nav-link" href="{{ route('login') }}">{{ __('messages.action.login')}}</a></li>
-          <li><a class="nav-link" href="{{ route('register') }}">{{ __('messages.action.register')}}</a></li>
+          <li><a class="nav-link" href="{{ route('login', ['lang' => \App::getLocale()]) }}">{{ __('messages.action.login')}}</a></li>
+          <li><a class="nav-link" href="{{ route('register', ['lang' => \App::getLocale()]) }}">{{ __('messages.action.register')}}</a></li>
         @else
         @if (Auth::user()->is_admin)
-          <li><a class="nav-link" href="{{ route('admin.user') }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.user.list')}}</a></li>
-          <li><a class="nav-link" href="{{ route('admin.addon') }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.addon.list')}}</a></li>
+          <li><a class="nav-link" href="{{ route('admin.user', ['lang' => \App::getLocale()]) }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.user.list')}}</a></li>
+          <li><a class="nav-link" href="{{ route('admin.addon', ['lang' => \App::getLocale()]) }}"><span class="text-danger">[{{ __('messages.user.admin')}}]</span>{{ __('messages.addon.list')}}</a></li>
         @endif
 
-          <li><a class="nav-link" href="{{ route('addon.manage') }}">{{ __('messages.addon.list')}}</a></li>
-          <li><a class="nav-link" href="{{ route('user.index') }}">{{ __('messages.label.profile')}}</a></li>
+          <li><a class="nav-link" href="{{ route('addon.manage', ['lang' => \App::getLocale()]) }}">{{ __('messages.addon.list')}}</a></li>
+          <li><a class="nav-link" href="{{ route('user.index', ['lang' => \App::getLocale()]) }}">{{ __('messages.label.profile')}}</a></li>
           <li>
-            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+            <a class="nav-link" href="{{ route('logout', ['lang' => \App::getLocale()]) }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
               {{ __('messages.action.logout')}}
             </a>
           </li>
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          <form id="logout-form" action="{{ route('logout', ['lang' => \App::getLocale()]) }}" method="POST" style="display: none;">
             @csrf
           </form>
         @endguest

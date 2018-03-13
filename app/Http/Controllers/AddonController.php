@@ -151,6 +151,7 @@ class AddonController extends Controller
 
   public function delete(Request $request, $id)
   {
+    $id = $request->route('id');
     $model = $this
       ->model_name::status(Status::PUBLISH)
       ->user(Auth::user())

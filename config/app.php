@@ -4,7 +4,7 @@ return [
     'description' => 'Simutrans のアドオン専用のアップローダーです',
     'file_size_limit_mb' => 10,
     'version' => '1.2',
-    'laguages' => [
+    'languages' => [
       'en' => 'English',
       'de' => 'Deutsch',
       'ja' => '日本語',

@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
 
-  <form method="post" action="{{ route('user.update') }}">
+  <form method="post" action="{{ route('user.update', ['lang' => \App::getLocale()]) }}">
     {{ csrf_field() }}
     <dl>
       <dt><label for="name"><span class="badge badge-danger">{{ __('messages.label.required') }}</span> {{ __('messages.user.name') }}</label></dt>

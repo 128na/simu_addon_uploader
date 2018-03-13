@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-  <form method="post" action="{{ route('addon.regist') }}">
+  <form method="post" action="{{ route('addon.regist', ['lang' => \App::getLocale()]) }}">
     {{ csrf_field() }}
     <div class="form-group">
       <label>{{ __('messages.addon.filename') }}</label>
@@ -49,7 +49,7 @@
     <div class="form-group">
       <input type="submit" class="btn btn-primary" value="{{ __('messages.action.register') }}">
       <hr>
-      <input type="submit" value="{{ __('messages.action.cancel') }}" class="btn btn-danger btn_confirm" data-message="{{ __('messages.label.confirm_cancel_input') }}" formaction="{{ route('addon.cancel') }}">
+      <input type="submit" value="{{ __('messages.action.cancel') }}" class="btn btn-danger btn_confirm" data-message="{{ __('messages.label.confirm_cancel_input') }}" formaction="{{ route('addon.cancel', ['lang' => \App::getLocale()]) }}">
     </div>
   </form>
 </div>

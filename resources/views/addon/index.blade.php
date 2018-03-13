@@ -25,7 +25,7 @@
     <li class="content-item">
       <div class="row">
         <div class="col-sm-5 break">
-          <a href="{{ route('addon.show', ['id' => $model->id]) }}">
+          <a href="{{ route('addon.show', ['lang' => \App::getLocale(), 'id' => $model->id]) }}">
             <strong>{{ $model->title }}</strong>
           </a>
         </div>

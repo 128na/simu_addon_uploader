@@ -20,7 +20,7 @@
         <div>{{ __('messages.addon.count') }}: {{ $model->counter->count }}</div>
       </p>
 
-      <form method="post" action="{{ route('addon.download', ['id' => $model->id]) }}">
+      <form method="post" action="{{ route('addon.download', ['lang' => \App::getLocale(), 'id' => $model->id]) }}">
         {{ csrf_field() }}
         <input type="submit" value="{{ __('messages.action.download') }}" class="btn btn-primary">
       </form>

@@ -24,6 +24,7 @@ class AdminController extends Controller
 
   public function userDelete(Request $request, $id)
   {
+    $id = $request->route('id');
     $model = User::findOrFail($id);
 
     try {
@@ -48,6 +49,7 @@ class AdminController extends Controller
 
   public function addonDelete(Request $request, $id)
   {
+    $id = $request->route('id');
     $model = Addon::findOrFail($id);
 
     try {
