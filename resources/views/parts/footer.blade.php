@@ -14,7 +14,7 @@
 @php
   $parameters['lang'] = $lang;
 @endphp
-      <a href="{{ route($name, $parameters) }}">{{ $label }}</a>
+      <a href="{{ route($name, $parameters) }}" rel="alternate" hreflang="{{ $lang }}">{{ $label }}</a>
 @endforeach
     </span>
   </div>
