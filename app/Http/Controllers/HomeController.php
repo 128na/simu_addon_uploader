@@ -34,7 +34,7 @@ class HomeController extends Controller
     return view("{$this->view_dir}.show", compact('model'));
   }
 
-  public function download(Request $request, $lang, $id)
+  public function download(Request $request, $id)
   {
     $id = $request->route('id');
     $model = $this->model_name::status(Status::PUBLISH)

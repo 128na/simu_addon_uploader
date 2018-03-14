@@ -6,12 +6,14 @@
       <a href="https://github.com/128na/simu_addon_uploader" target="_blank">Github</a>
     </span>
     <span class="pull-right">
-@foreach(config('app.languages') as $lang => $label)
-<?php
+@php
   $name = \Request::route()->getName();
   $parameters = \Request::route()->parameters;
+@endphp
+@foreach(config('app.languages') as $lang => $label)
+@php
   $parameters['lang'] = $lang;
-?>
+@endphp
       <a href="{{ route($name, $parameters) }}">{{ $label }}</a>
 @endforeach
     </span>

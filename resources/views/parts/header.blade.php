@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
   <div class="container">
-    <a class="navbar-brand" href="{{ url('/') }}">
+    <a class="navbar-brand" href="{{ route('addon.index', ['lang' => \App::getLocale()]) }}">
       {{ config('app.name') }} <small>ver {{ config('app.version')}}</small>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
