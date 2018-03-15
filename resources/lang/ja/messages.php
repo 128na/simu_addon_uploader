@@ -86,6 +86,7 @@ return [
     'file_not_found'      => 'ファイルがありません',
     'post_not_found'      => '指定された投稿がありません',
     'file_delete_failed'  => '削除に失敗しました',
+    'page_not_found'      => 'ページが見つかりません',
   ],
   'success' => [
     'publish'        => '投稿しました',

@@ -86,6 +86,7 @@ return [
     'file_not_found'      => 'Es gibt keine Datei',
     'post_not_found'      => 'Es sind keine Beiträge angegeben',
     'file_delete_failed'  => 'Löschen fehlgeschlagen',
+    'page_not_found'      => 'Seite nicht gefunden',
   ],
   'success' => [
     'publish'        => 'Veröffentlicht',

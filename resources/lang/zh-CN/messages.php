@@ -86,6 +86,7 @@ return [
     'file_not_found'      => '没有文件',
     'post_not_found'      => '没有指定职位',
     'file_delete_failed'  => '删除失败',
+    'page_not_found'      => '找不到网页',
   ],
   'success' => [
     'publish'        => '发布',

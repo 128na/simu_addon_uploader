@@ -11,7 +11,6 @@
 |
 */
 Route::middleware('locale')
-  ->prefix('{lang?}')
   ->group(function () {
 
     // ログイン不要機能

@@ -49,4 +49,8 @@ class Controller extends BaseController
     return realpath(storage_path("app/{$path}"));
   }
 
+
+  public function redirectTo() {
+    return route('addon.manage', ['lang' => \App::getLocale()]);
+  }
 }

@@ -15,7 +15,7 @@ class SetLocale
    */
   public function handle($request, Closure $next)
   {
-    $lang = $request->route('lang');
+    $lang = $request->query('lang', config('app.fallback_locale'));
 
     if (array_key_exists($lang, config('app.languages'))) {
       logger('locale:'.$lang);

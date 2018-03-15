@@ -86,6 +86,7 @@ return [
     'file_not_found'      => 'File not found',
     'post_not_found'      => 'Post not found',
     'file_delete_failed'  => 'File delete failed',
+    'page_not_found'      => 'Page not found',
   ],
   'success' => [
     'publish'        => 'Publish',
