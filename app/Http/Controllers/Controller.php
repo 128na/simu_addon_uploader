@@ -39,7 +39,7 @@ class Controller extends BaseController
   {
     logger()->error($e->getMessage());
     $request->session()->flash('error', $message);
-    return redirect()->route($dest);
+    return redirect()->route($dest, ['lang' => \App::getLocale()]);
   }
 
 

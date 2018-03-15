@@ -60,7 +60,7 @@ class AddonController extends Controller
     ]);
     $request->session()->put('addon_id', $model->id);
 
-    return redirect()->route('addon.input');
+    return redirect()->route('addon.input', ['lang' => \App::getLocale()]);
   }
 
   public function input(Request $request)
@@ -69,7 +69,7 @@ class AddonController extends Controller
 
     if (is_null($id)) {
       $request->session()->flash('error', __('messages.error.file_not_found'));
-      return redirect()->route('addon.manage');
+      return redirect()->route('addon.manage', ['lang' => \App::getLocale()]);
     }
     $model = $this->model_name::findOrFail($id);
     $paks = Pak::all();
@@ -114,7 +114,7 @@ class AddonController extends Controller
 
     $request->session()->forget('addon_id');
     $request->session()->flash('success', __('messages.success.publish'));
-    return redirect()->route('addon.index');
+    return redirect()->route('addon.index', ['lang' => \App::getLocale()]);
   }
 
 
@@ -136,7 +136,7 @@ class AddonController extends Controller
 
     $request->session()->forget('addon_id');
     $request->session()->flash('success', __('messages.success.cancel'));
-    return redirect()->route('addon.manage');
+    return redirect()->route('addon.manage', ['lang' => \App::getLocale()]);
   }
 
   public function manage(Request $request)
@@ -164,7 +164,7 @@ class AddonController extends Controller
     }
     $model->delete();
     $request->session()->flash('success', __('messages.success.delete'));
-    return redirect()->route('addon.manage');
+    return redirect()->route('addon.manage', ['lang' => \App::getLocale()]);
   }
 
   // ファイル名の情報（*.dat, *.tab）を取得する

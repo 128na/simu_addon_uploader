@@ -35,7 +35,7 @@ class UserController extends Controller
       'email' => $request->input('email'),
     ])->save();
     $request->session()->flash('success', __('messages.success.update'));
-    return redirect()->route('user.edit');
+    return redirect()->route('user.edit', ['lang' => \App::getLocale()]);
   }
   public function delete(Request $request)
   {
@@ -51,6 +51,6 @@ class UserController extends Controller
     $user->delete();
     $request->session()->flush();
     $request->session()->flash('success', __('messages.success.delete_account'));
-    return redirect()->route('addon.index');
+    return redirect()->route('addon.index', ['lang' => \App::getLocale()]);
   }
 }
