@@ -17,7 +17,7 @@ Route::middleware('locale')
     Route::get('/', 'HomeController@index')->name('addon.index');
     Route::get('show/{id}', 'HomeController@show')->name('addon.show');
     Route::post('download/{id}', 'HomeController@download')->name('addon.download');
-    Route::post('search', 'HomeController@search')->name('addon.search');
+    Route::get('search', 'HomeController@search')->name('addon.search');
 
     // ログイン
     Auth::routes();

@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
     {
       // HTTP系エラーまたはモデルないですエラー
       if ($this->isHttpException($exception) || $exception instanceof ModelNotFoundException) {
-        $request->session()->flash('error', __('messages.error.page_not_found'));
+        session()->flash('error', __('messages.error.page_not_found'));
         return redirect()->route('addon.index', ['lang' => \App::getLocale()]);
       }
 
