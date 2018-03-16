@@ -26,7 +26,6 @@ class HomeController extends Controller
 
   public function show(Request $request, $id)
   {
-    $id = $request->route('id');
     $model = $this
       ->model_name::status(Status::PUBLISH)
       ->with(['user', 'paks', 'counter'])
@@ -36,7 +35,6 @@ class HomeController extends Controller
 
   public function download(Request $request, $id)
   {
-    $id = $request->route('id');
     $model = $this->model_name::status(Status::PUBLISH)
       ->with(['counter'])
       ->findOrFail($id);
