@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -48,6 +49,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+      // HTTP系エラーまたはモデルないですエラー
+      if ($this->isHttpException($exception) || $exception instanceof ModelNotFoundException) {
+        session()->flash('error', __('messages.error.page_not_found'));
+        return redirect()->route('addon.index', ['lang' => \App::getLocale()]);
+      }
+
+      return parent::render($request, $exception);
     }
 }

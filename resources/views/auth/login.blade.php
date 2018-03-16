@@ -13,7 +13,7 @@
         <div class="card-header">{{ __('messages.page.auth.login') }}</div>
 
         <div class="card-body">
-          <form method="POST" action="{{ route('login') }}">
+          <form method="POST" action="{{ route('login', ['lang' => \App::getLocale()]) }}">
             @csrf
 
             <div class="form-group row">
@@ -60,7 +60,7 @@
                   {{ __('messages.action.login') }}
                 </button>
 
-                <a class="btn btn-link" href="{{ route('password.request') }}">
+                <a class="btn btn-link" href="{{ route('password.request', ['lang' => \App::getLocale()]) }}">
                   {{ __('messages.page.auth.email') }}
                 </a>
               </div>

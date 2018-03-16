@@ -39,7 +39,7 @@ class Controller extends BaseController
   {
     logger()->error($e->getMessage());
     $request->session()->flash('error', $message);
-    return redirect()->route($dest);
+    return redirect()->route($dest, ['lang' => \App::getLocale()]);
   }
 
 
@@ -49,4 +49,8 @@ class Controller extends BaseController
     return realpath(storage_path("app/{$path}"));
   }
 
+
+  public function redirectTo() {
+    return route('addon.manage', ['lang' => \App::getLocale()]);
+  }
 }

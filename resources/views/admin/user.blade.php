@@ -30,7 +30,7 @@
 @endif
         </div>
         <div class="col-sm-2">
-          <a href="{{ route('admin.user.delete', ['id' => $model->id]) }}" class="btn btn-danger btn-sm btn_confirm" data-message="{{ __('messages.label.confirm_delete_item') }}">{{ __('messages.action.delete') }}</a>
+          <a href="{{ route('admin.user.delete', ['lang' => \App::getLocale(), 'id' => $model->id]) }}" class="btn btn-danger btn-sm btn_confirm" data-message="{{ __('messages.label.confirm_delete_item') }}">{{ __('messages.action.delete') }}</a>
         </div>
       </div>
     </li>

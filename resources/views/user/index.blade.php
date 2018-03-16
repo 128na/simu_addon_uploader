@@ -14,8 +14,8 @@
     <dt>{{ __('messages.user.created_at') }}</dt>
     <dd>{{ $user->created_at }}</dd>
   </dl>
-  <a href="{{ route('user.edit') }}" class="btn btn-primary">{{ __('messages.action.edit') }}</a>
+  <a href="{{ route('user.edit', ['lang' => \App::getLocale()]) }}" class="btn btn-primary">{{ __('messages.action.edit') }}</a>
   <hr>
-  <a href="{{ route('user.delete') }}" class="btn btn-danger btn_confirm" data-message="{{ __('messages.label.confirm_delete_user') }}">{{ __('messages.action.delete_user') }}</a>
+  <a href="{{ route('user.delete', ['lang' => \App::getLocale()]) }}" class="btn btn-danger btn_confirm" data-message="{{ __('messages.label.confirm_delete_user') }}">{{ __('messages.action.delete_user') }}</a>
 </div>
 @endsection

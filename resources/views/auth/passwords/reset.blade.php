@@ -12,7 +12,7 @@
         <div class="card-header">{{ __('messages.page.auth.reset') }}</div>
 
         <div class="card-body">
-          <form method="POST" action="{{ route('password.request') }}">
+          <form method="POST" action="{{ route('password.request', ['lang' => \App::getLocale()]) }}">
             @csrf
 
             <input type="hidden" name="token" value="{{ $token }}">

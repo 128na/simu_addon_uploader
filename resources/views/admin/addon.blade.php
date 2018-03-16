@@ -23,7 +23,7 @@
     <li class="content-item">
       <div class="row">
         <div class="col-sm-3 break">
-          <a href="{{ route('addon.show', ['id' => $model->id]) }}">
+          <a href="{{ route('addon.show', ['lang' => \App::getLocale(), 'id' => $model->id]) }}">
             <strong>{{ $model->title }}</strong>
           </a>
         </div>
@@ -40,7 +40,7 @@
           {{ $model->created_at }}
         </div>
         <div class="col-sm-2">
-          <a href="{{ route('admin.addon.delete', ['id' => $model->id]) }}" class="btn btn-danger btn-sm btn_confirm" data-message="{{ __('messages.label.confirm_delete_item') }}">{{ __('messages.action.delete') }}</a>
+          <a href="{{ route('admin.addon.delete', ['lang' => \App::getLocale(), 'id' => $model->id]) }}" class="btn btn-danger btn-sm btn_confirm" data-message="{{ __('messages.label.confirm_delete_item') }}">{{ __('messages.action.delete') }}</a>
         </div>
       </div>
     </li>

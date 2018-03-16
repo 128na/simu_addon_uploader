@@ -12,7 +12,7 @@
         <div class="card-header">{{ __('messages.page.auth.register') }}</div>
 
         <div class="card-body">
-          <form method="POST" action="{{ route('register') }}">
+          <form method="POST" action="{{ route('register', ['lang' => \App::getLocale()]) }}">
             @csrf
 
             <div class="form-group row">

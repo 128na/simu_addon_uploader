@@ -36,7 +36,7 @@ class AdminController extends Controller
 
     $model->delete();
     $request->session()->flash('success', __('messages.success.delete'));
-    return redirect()->route('admin.user');
+    return redirect()->route('admin.user', ['lang' => \App::getLocale()]);
   }
 
   public function addon(Request $request)
@@ -57,6 +57,6 @@ class AdminController extends Controller
     }
     $model->delete();
     $request->session()->flash('success', __('messages.success.delete'));
-    return redirect()->route('admin.addon');
+    return redirect()->route('admin.addon', ['lang' => \App::getLocale()]);
   }
 }
